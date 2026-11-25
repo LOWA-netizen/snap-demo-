@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LOWA LAB</title>
+<style>
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:#ffeb00;
+  font-family:Arial,sans-serif;
+  display:grid;
+  place-items:center;
+  min-height:100vh;
+}
+.card {
+  background:white;
+  width:90%;
+  max-width:380px;
+  padding:30px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 15px 50px #0002;
+  animation:appear .5s ease;
+}
+input,button {
+  width:100%;
+  padding:15px;
+  margin:8px 0;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:16px;
+}
+button {
+  background:#111;
+  color:white;
+  border:0;
+  cursor:pointer;
+}
+small {color:#666}
+.logo {font-size:48px}
+@keyframes appear {
+  from {opacity:0;transform:scale(.9)}
+  to {opacity:1;transform:scale(1)}
+}
+</style>
+</head>
+<body>
+<div class="card" id="login">
+  <div class="logo">⚡</div>
+  <h1>LOWA LAB</h1>
+  <small>مختبر تسجيل دخول تجريبي</small>
+  <input id="email" type="email"
+    placeholder="البريد الإلكتروني التجريبي"
+    autocomplete="off">
+  <input id="password" type="password"
+    placeholder="كلمة المرور التجريبية"
+    autocomplete="off">
+  <button onclick="login()">تسجيل الدخول</button>
+  <p id="status"></p>
+</div>
+
+<div class="card" id="verify" hidden>
+  <div class="logo">🔐</div>
+  <h2>التحقق من الحساب</h2>
+  <p>أدخل رمز الاختبار 123456</p>
+  <small>لم يتم إرسال رسالة حقيقية</small>
+  <input id="otp" maxlength="6"
+    inputmode="numeric" placeholder="000000">
+  <button onclick="verify()">تحقق</button>
+  <p id="result"></p>
+</div>
+
+<script>
+function login(){
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+
+  if(!email.value || !password.value){
+    alert("أدخل بيانات الاختبار");
+    return;
+  }
+
+  email.value = "";
+  password.value = "";
+
+  document.getElementById("status").textContent =
+    "جاري التحقق...";
+
+  setTimeout(()=>{
+    document.getElementById("login").hidden = true;
+    document.getElementById("verify").hidden = false;
+  },1500);
+}
+
+function verify(){
+  document.getElementById("result").textContent =
+    document.getElementById("otp").value === "123456"
+    ? "تم التحقق بنجاح ✓"
+    : "رمز الاختبار غير صحيح";
+}
+</script>
+</body>
+</html>
